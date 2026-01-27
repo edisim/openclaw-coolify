@@ -1,7 +1,7 @@
 services:
   clawdbot:
     build: .
-    container_name: clawdbot
+    user: '0:0'
     restart: on-failure:3
     ulimits:
       nofile:
