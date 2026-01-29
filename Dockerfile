@@ -120,7 +120,8 @@ RUN curl -fsSL https://molt.bot/install.sh | bash && \
 
 # Copy local scripts (as node user since we already switched)
 COPY --chown=node:node scripts/bootstrap.sh /app/scripts/bootstrap.sh
-RUN chmod +x /app/scripts/bootstrap.sh
+COPY --chown=node:node scripts/molt-approve.sh /home/node/.npm-global/bin/molt-approve
+RUN chmod +x /app/scripts/bootstrap.sh /home/node/.npm-global/bin/molt-approve
 
 # Expose the application port
 EXPOSE 18789
