@@ -22,6 +22,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg \
     # Power Tools: ripgrep, fd, fzf, bat
     ripgrep fd-find fzf bat \
+    # Document & Office Tools: pandoc, pdf, images
+    pandoc \
+    poppler-utils \
+    ffmpeg \
+    imagemagick \
+    graphviz \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Cloudflare Tunnel (cloudflared)
@@ -48,13 +54,19 @@ RUN apt-get update && apt-get install -y unzip && rm -rf /var/lib/apt/lists/* &&
     curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
-# Install Vercel (Node & NPM are already provided by base image)
-RUN npm install -g yarn vercel && \
+# Install Vercel & Marp (Slides)
+# Node & NPM are already provided by base image
+RUN npm install -g yarn vercel @marp-team/marp-cli && \
     hash -r
 
-# Install Python Tools (IPython)
+# Install Python Tools (IPython, Office Libs)
 # Use --break-system-packages because we are in a container/appliance
-RUN pip3 install ipython --break-system-packages
+RUN pip3 install ipython \
+    csvkit \
+    openpyxl \
+    python-docx \
+    pypdf \
+    --break-system-packages
 
 # Add aliases for standard tool names (Debian/Ubuntu quirks)
 RUN ln -s /usr/bin/fdfind /usr/bin/fd || true && \
