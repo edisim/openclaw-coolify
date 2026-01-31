@@ -1,4 +1,9 @@
 services:
+  registry:
+    image: registry:2
+    restart: unless-stopped
+    volumes:
+      - registry-data:/var/lib/registry
   openclaw:
     build:
       context: .
@@ -12,6 +17,8 @@ services:
     env_file:
       - .env
     environment:
+      DOCKER_HOST: tcp://docker-proxy:2375
+
       PORT: 18789
       NODE_ENV: production
       NODE_OPTIONS: '--max-old-space-size=4096'
@@ -167,6 +174,7 @@ volumes:
   openclaw-linkding:
   openclaw-dbadmin:
   searxng-data:
+  registry-data:
 #  qdrant-data:
 #  linkding-data:
 #  miniflux-db:
