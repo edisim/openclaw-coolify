@@ -7,6 +7,8 @@ services:
     environment:
       REGISTRY_HTTP_SECRET: ${SERVICE_BASE64_REGISTRY}
   openclaw:
+    ports:
+    - "18789:18789"
     build:
       context: .
       args:
